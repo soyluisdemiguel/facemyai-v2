@@ -1,0 +1,150 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model OpenAiAssistant {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Session {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  accessLogsItems AccessLogs[]
+  activityLogs    ActivityLog[]
+  createdAt       DateTime      @default(now())
+  email           String?       @unique
+  firstName       String?
+  id              String        @id @default(cuid())
+  lastName        String?
+  password        String
+  roles           Json
+  updatedAt       DateTime      @updatedAt
+  username        String        @unique
+}
+
+model AssistantTypes {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  typeName  String?
+  updatedAt DateTime @updatedAt
+}
+
+model AccessLogs {
+  createdAt DateTime  @default(now())
+  dateTime  DateTime?
+  device    String?
+  id        String    @id @default(cuid())
+  ip        String?
+  updatedAt DateTime  @updatedAt
+  user      User?     @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+model ActivityLog {
+  action      String?
+  createdAt   DateTime  @default(now())
+  dateTime    DateTime?
+  description String?
+  id          String    @id @default(cuid())
+  updatedAt   DateTime  @updatedAt
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      String?
+}
+
+model AssistantSettings {
+  assistant    Assistants? @relation(fields: [assistantId], references: [id])
+  assistantId  String?
+  createdAt    DateTime    @default(now())
+  id           String      @id @default(cuid())
+  settingName  String?
+  settingValue String?
+  updatedAt    DateTime    @updatedAt
+}
+
+model SessionStatuses {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model MessageTypes {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Clients {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Sessions {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Assistants {
+  assistantSettingsItems AssistantSettings[]
+  createdAt              DateTime            @default(now())
+  description            String?
+  id                     String              @id @default(cuid())
+  name                   String?
+  openAiAssistantId      String?
+  typeId                 String?
+  updatedAt              DateTime            @updatedAt
+}
+
+model UserTypes {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Providers {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Billing {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Messages {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Industries {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Conversations {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Users {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
